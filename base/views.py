@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from . models import Project
  
 
 def home(request):
-    msg = "hello you are on the projects section"
-    return render(request, 'base\home.html', {'msg': msg})
+    projects = Project.objects.all()
+    context = {'projects': projects}
+    return render(request, 'base\home.html', context)
 
 def project_detail(request, pk):
-    msg = "hello you are on the home page"
-    return render(request, 'base\home.html', {'msg': msg})
+    projectObj = Project.objects.get(id=pk)
+    return render(request, 'base\project_detail.html', {'project': projectObj})
