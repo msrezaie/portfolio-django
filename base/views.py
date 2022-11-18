@@ -9,4 +9,5 @@ def home(request):
 
 def project_detail(request, pk):
     projectObj = Project.objects.get(id=pk)
-    return render(request, 'base\project_detail.html', {'project': projectObj})
+    tags = projectObj.tags.all()
+    return render(request, 'base\project_detail.html', {'project': projectObj, 'tags': tags})

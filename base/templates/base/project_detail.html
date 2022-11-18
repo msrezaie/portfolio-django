@@ -1,3 +1,8 @@
+<img style="max-width: 600px;" src="{{project.featured_image.url}}"/>
+
 <h3>{{project.title}}</h3>
-<hr>
+{% for tag in tags %}
+<span style="border: 1px solid grey">{{tag}}</span>
+{% endfor %}
+<hr />
 <p>{{project.desc}}</p>
