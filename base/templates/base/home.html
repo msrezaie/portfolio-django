@@ -1,66 +1,75 @@
+{% extends 'main.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mo Rezaie</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static '/styles/main.css' %}" type="text/css">
-    <script src="https://kit.fontawesome.com/2f609f5d80.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <br>
-    <div class='container'>
-        <div class='row'>
-            <div class='col-md-3'>
-                <div id="profile-wrapper" class='card card-body h-100'>
-                    <img id="profile-pic" src="{% static '/images/profile.jpg' %}" alt="">
-                    <hr>
-                    <h2>Hello, I am Mohammad!</h2>
-                    <p>I’m interested in coding and developing software with Python</p>
-                    <ul class='social-links'>
-                        <li><a href="https://www.linkedin.com/in/mohammad-sulayman-rezaie-ab6940223/"><i class="social fab fa-linkedin"></i></a></li>
-                        <li><a href="https://github.com/msrezaie"><i class="social fab fa-github"></i></a></li>
-                    </ul>
+
+{% block content %}
+
+<br>
+<main class="projects">
+    <!-- Search Result: DevList -->
+    <section class="projectsList">
+        <div class="container">
+            <div class="grid grid--three">
+                {% comment %} one card {% endcomment %}
+                {% for project in projects %}
+                <div class="column">
+                    <div class="card project">
+                        <a href="{% url 'project' project.id %}" class="project">
+                            <img class="project__thumbnail" src="{{project.featured_image.url}}" alt="project thumbnail" />
+                            <div class="card__body">
+                                <h3 class="project__title">{{project.title}}</h3>
+                                {% comment %} <p><a class="project__author" href="">By
+                                        {{project.owner.name}}</a> 
+                                </p> {% endcomment %}
+                                <div class="project__tags">
+                                    {% for tag in project.tags.all %}
+                                    <span class="tag tag--pill tag--main">
+                                        <small>{{tag}}</small>
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
+                {% endfor %}
+
             </div>
-            <br>
-            <div class='col-md-9'>
-                <div class='card card-body h-100'>
-                    <h2>My Story</h2>
-                    <hr>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad ea asperiores incidunt commodi ex nostrum eos inventore quos similique accusantium beatae, distinctio, animi molestiae fuga, aperiam id. Dolorum, autem ducimus.</p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita voluptatem repellat hic excepturi error impedit, consequatur ad aliquam vel perspiciatis deleniti quos quibusdam libero animi facere nulla minus doloremque qui?</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic odio architecto expedita ipsa rerum nam rem commodi atque adipisci repudiandae non ipsum optio, minus nesciunt doloremque assumenda? Asperiores, quas deleniti.</p>
-                </div>
+        </div>
+    </section>
+</main>
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-3'>
+            <div id="profile-wrapper" class='card card-body h-100'>
+                <img id="profile-pic" src="{% static '/images/profile.jpg' %}" alt="">
+                <hr>
+                <h2>Hello, I am Mohammad!</h2>
+                <p>I’m interested in coding and developing software with Python</p>
+                <ul class='social-links'>
+                    <li><a href="https://www.linkedin.com/in/mohammad-sulayman-rezaie-ab6940223/"><i class="social fab fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/msrezaie"><i class="social fab fa-github"></i></a></li>
+                </ul>
             </div>
         </div>
         <br>
-        <div class='row'>
-            <div class='col-md-12'>
-                <div class='card card-body h-100'>
-                    <h2>Projects</h2>
-                    <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Created</th>
-                            <th></th>
-                        </tr>
-                        {% for project in projects %}
-                        <tr>
-                            <td>{{project.id}}</td>
-                            <td>{{project.title}}</td>
-                            <td>{{project.created}}</td>
-                            <td><a href="{% url 'project' project.id %}">View</a></td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    </ul>
-                </div>
+        <div class='col-md-9'>
+            <div class='card card-body h-100'>
+                <h2>My Story</h2>
+                <hr>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad ea asperiores incidunt commodi ex nostrum eos inventore quos similique accusantium beatae, distinctio, animi molestiae fuga, aperiam id. Dolorum, autem ducimus.</p>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita voluptatem repellat hic excepturi error impedit, consequatur ad aliquam vel perspiciatis deleniti quos quibusdam libero animi facere nulla minus doloremque qui?</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic odio architecto expedita ipsa rerum nam rem commodi atque adipisci repudiandae non ipsum optio, minus nesciunt doloremque assumenda? Asperiores, quas deleniti.</p>
             </div>
         </div>
     </div>
-</body>
-</html>
+    <br>
+    <div class='row'>
+        <div class='col-lg-12'>
+            <div class='card card-body h-100'>
+                <h2>Projects</h2>
+    
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
