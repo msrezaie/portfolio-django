@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from . models import Project
+from . models import Project, Profile
  
 
 def home(request):
     projects = Project.objects.all()
-    context = {'projects': projects}
+    profile = Profile.objects.all()
+    context = {'projects': projects, 'profile': profile}
     return render(request, 'base\home.html', context)
 
 def project_detail(request, pk):
