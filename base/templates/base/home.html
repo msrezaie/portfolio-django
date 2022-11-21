@@ -10,40 +10,28 @@
             <div class="column column--1of3">
                 <div class="card text-center">
                     <div class="card__body dev">
-                        <img class="avatar avatar--xl" src="" />
-                        <h2 class="dev__name"></h2>
-                        <p class="dev__title"></p>
-                        <p class="dev__location">Based in dblink</p>
+                        <img class="avatar avatar--lg" src="{{profile.profile_image.url}}" />
+                        <h2 class="dev__name">Hi, I am {{profile.full_name}}</h2>
+                        <p class="dev__title">{{profile.short_bio}}</p>
+                        <p class="dev__location">Based in {{profile.location}}</p>
                         <ul class="dev__social">
 
-                            {% comment %} {% if profile.social_github %}
+                            {% if profile.social_github %}
                             <li>
-                                <a title="Github" href="{{profile.social_github}}" target="_blank"><i
+                                <a title="Github" href="{{profile.social_github}}" target="_blank">#<i
                                         class="im im-github"></i></a>
                             </li>
                             {% endif %}
 
-
-                            {% if profile.social_twitter %}
-                            <li>
-                                <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"><i
-                                        class="im im-twitter"></i></a>
-                            </li>
-                            {% endif %}
+                            {% comment %} <li><a href="https://www.linkedin.com/in/mohammad-sulayman-rezaie-ab6940223/"><i class="social fab fa-linkedin"></i></a></li>
+                            <li><a href="https://github.com/msrezaie"><i class="social fab fa-github"></i></a></li> {% endcomment %}
 
                             {% if profile.social_linkedin %}
                             <li>
-                                <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"><i
+                                <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank">#<i
                                         class="im im-linkedin"></i></a>
                             </li>
                             {% endif %}
-
-                            {% if profile.social_website %}
-                            <li>
-                                <a title="Personal Website" href="{{profile.social_website}}" target="_blank"><i
-                                        class="im im-globe"></i></a>
-                            </li>
-                            {% endif %} {% endcomment %}
 
                         </ul>
                         {% comment %} {% if request.user.profile.id != profile.id %}
@@ -55,52 +43,45 @@
             <div class="column column--2of3">
                 <div class="devInfo">
                     <h3 class="devInfo__title">About Me</h3>
-                    <p class="devInfo__about"></p>
+                    <p class="devInfo__about">{{profile.long_bio}}</p>
                 </div>
                 <div class="devInfo">
                     <h3 class="devInfo__title">Skills</h3>
                     <div class="devInfo__skills">
 
-                        {% comment %} {% for skill in topSkills %}
+                        {% for skill in topSkills %}
                         <div class="devSkill">
                             <h4 class="devSkill__title">{{skill.name}}</h4>
                             <p class="devSkill__info">{{skill.description}}</p>
                         </div>
-                        {% endfor %} {% endcomment %}
-
-
+                        {% endfor %}
 
                         <h3 class="devInfo__subtitle">Other Skills</h3>
                         <div class="devInfo__otherSkills">
 
-                            {% comment %} {% for skill in otherSkills %}
+                            {% for skill in otherSkills %}
                             <span class="tag tag--pill tag--sub tag--lg">
                                 <small>{{skill}}</small>
                             </span>
-                            {% endfor %} {% endcomment %}
+                            {% endfor %}
 
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="column column--3of3">
                 <div class="devInfo">
                     <h3 class="devInfo__title">Projects</h3>
-                    <div class="grid grid--two">
-                        {% for project in profile.project_set.all %}
+                    <div class="grid grid--three">
+                        
+                        {% for project in projects %}
                         <div class="column">
                             <div class="card project">
                                 <a href="{% url 'project' project.id %}" class="project">
-                                    <img class="project__thumbnail" src="{{project.imageURL}}"
+                                    <img class="project__thumbnail" src="{{project.featured_image.url}}"
                                         alt="project thumbnail" />
                                     <div class="card__body">
                                         <h3 class="project__title">{{project.title}}</h3>
-                                        <p><a class="project__author"
-                                                href="{% url 'user-profile' project.owner.id %}">By
-                                                {{project.owner.name}}</a>
-                                        </p>
-                                        <p class="project--rating">
-                                            <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Postitive
-                                            Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:"s"}})
-                                        </p>
                                         <div class="project__tags">
 
                                             {% for tag in project.tags.all %}
@@ -123,73 +104,4 @@
     </div>
 </main>
 
-<br>
-<main class="projects">
-    <!-- Search Result: DevList -->
-    <section class="projectsList">
-        <div class="container">
-            <div class="grid grid--three">
-                {% comment %} one card {% endcomment %}
-                {% for project in projects %}
-                <div class="column">
-                    <div class="card project">
-                        <a href="{% url 'project' project.id %}" class="project">
-                            <img class="project__thumbnail" src="{{project.featured_image.url}}" alt="project thumbnail" />
-                            <div class="card__body">
-                                <h3 class="project__title">{{project.title}}</h3>
-                                {% comment %} <p><a class="project__author" href="">By
-                                        {{project.owner.name}}</a> 
-                                </p> {% endcomment %}
-                                <div class="project__tags">
-                                    {% for tag in project.tags.all %}
-                                    <span class="tag tag--pill tag--main">
-                                        <small>{{tag}}</small>
-                                    </span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-
-            </div>
-        </div>
-    </section>
-</main>
-{% comment %} <div class='container'>
-    <div class='row'>
-        <div class='col-md-3'>
-            <div id="profile-wrapper" class='card card-body h-100'>
-                <img id="profile-pic" src="{% static '/images/profile.jpg' %}" alt="">
-                <hr>
-                <h2>Hello, I am Mohammad!</h2>
-                <p>I’m interested in coding and developing software with Python</p>
-                <ul class='social-links'>
-                    <li><a href="https://www.linkedin.com/in/mohammad-sulayman-rezaie-ab6940223/"><i class="social fab fa-linkedin"></i></a></li>
-                    <li><a href="https://github.com/msrezaie"><i class="social fab fa-github"></i></a></li>
-                </ul>
-            </div>
-        </div>
-        <br>
-        <div class='col-md-9'>
-            <div class='card card-body h-100'>
-                <h2>My Story</h2>
-                <hr>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad ea asperiores incidunt commodi ex nostrum eos inventore quos similique accusantium beatae, distinctio, animi molestiae fuga, aperiam id. Dolorum, autem ducimus.</p>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita voluptatem repellat hic excepturi error impedit, consequatur ad aliquam vel perspiciatis deleniti quos quibusdam libero animi facere nulla minus doloremque qui?</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic odio architecto expedita ipsa rerum nam rem commodi atque adipisci repudiandae non ipsum optio, minus nesciunt doloremque assumenda? Asperiores, quas deleniti.</p>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class='row'>
-        <div class='col-lg-12'>
-            <div class='card card-body h-100'>
-                <h2>Projects</h2>
-    
-            </div>
-        </div>
-    </div>
-</div> {% endcomment %}
 {% endblock content %}
